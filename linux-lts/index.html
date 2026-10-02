@@ -13,18 +13,19 @@
 <body>
   <h1>Index of linux-lts/</h1>
   <p><a href="../">../</a></p>
-  <p><a href="IFNOT.md" class="download" onclick="downloadFile(event, this)">IFNOT.md</a></p>
+  <p><a href="IFNOT.md">IFNOT.md</a> <button data-file="IFNOT.md">Download File</button></p>
   <script>
-    async function downloadFile(event, link) {
-      event.preventDefault();
-      const blob = await fetch(link.href).then(response => response.blob());
+    async function downloadFile(file) {
+      const blob = await fetch(file).then(response => response.blob());
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = link.pathname.split('/').pop();
+      a.download = file.split('/').pop();
       a.click();
       URL.revokeObjectURL(url);
     }
+    document.querySelectorAll('[data-file]').forEach(button =>
+      button.addEventListener('click', () => downloadFile(button.dataset.file)));
   </script>
   <p><a href="../latest/linux-lts.json">linux-lts.json</a></p>
 </body>
