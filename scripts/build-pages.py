@@ -30,7 +30,7 @@ def write_index(directory: Path) -> None:
         else:
             entries.append(
                 f'<p><a href="{escape(path.name)}">{escape(path.name)}</a> '
-                f'<button data-file="{escape(path.name)}">Download File</button></p>'
+                f'<a href="{escape(path.name)}" download>Download File</a></p>'
             )
 
     parent = '' if directory == ROOT else '../'
@@ -39,14 +39,11 @@ def write_index(directory: Path) -> None:
         '<!doctype html>', '<html lang="en"><head>', '<meta charset="utf-8">',
         '<meta name="viewport" content="width=device-width,initial-scale=1">',
         f'<title>GPTPM kernels - {escape(title)}</title>',
-        '<style>body{max-width:700px;margin:40px 16px;color:#222;background:#fff;font:15px/1.6 monospace}h1{font-size:20px;font-weight:normal}a{color:#06c}button{font:inherit}</style>',
+        '<style>body{max-width:700px;margin:40px 16px;color:#222;background:#fff;font:15px/1.6 monospace}h1{font-size:20px;font-weight:normal}a{color:#06c}</style>',
         '</head><body>', f'<h1>Index of {escape(title)}</h1>',
         f'<p><a href="{parent}">../</a></p>' if directory != ROOT else '',
         *entries,
-        '<script>',
-        'async function downloadFile(file){const blob=await fetch(file).then(r=>r.blob());const u=URL.createObjectURL(blob);const a=document.createElement("a");a.href=u;a.download=file.split("/").pop();a.click();URL.revokeObjectURL(u)}',
-        'document.querySelectorAll("[data-file]").forEach(b=>b.onclick=()=>downloadFile(b.dataset.file));',
-        '</script></body></html>',
+        '</body></html>',
     ]
     (directory / 'index.html').write_text('\n'.join(body), encoding='utf-8')
 
