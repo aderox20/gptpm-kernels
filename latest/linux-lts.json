@@ -1,10 +1,10 @@
 {
   "name": "linux-lts",
   "channel": "lts",
-  "version": null,
-  "release": null,
-  "kernel": null,
-  "modules": null,
-  "sha256sums": null,
-  "status": "not-published"
+  "version": "6.18.54",
+  "release": "../linux-lts/v6.18.54/",
+  "kernel": "../linux-lts/v6.18.54/vmlinuz",
+  "modules": "../linux-lts/v6.18.54/modules.tar.xz",
+  "sha256sums": "../linux-lts/v6.18.54/SHA256SUMS",
+  "status": "published"
 }

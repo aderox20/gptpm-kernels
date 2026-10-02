@@ -1,10 +1,10 @@
 {
   "name": "linux",
   "channel": "stable",
-  "version": null,
-  "release": null,
-  "kernel": null,
-  "modules": null,
-  "sha256sums": null,
-  "status": "not-published"
+  "version": "7.2.8",
+  "release": "../linux/v7.2.8/",
+  "kernel": "../linux/v7.2.8/vmlinuz",
+  "modules": "../linux/v7.2.8/modules.tar.xz",
+  "sha256sums": "../linux/v7.2.8/SHA256SUMS",
+  "status": "published"
 }
