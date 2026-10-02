@@ -1,0 +1,10 @@
+{
+  "name": "linux",
+  "channel": "stable",
+  "version": null,
+  "release": null,
+  "kernel": null,
+  "modules": null,
+  "sha256sums": null,
+  "status": "not-published"
+}

@@ -1,0 +1,10 @@
+{
+  "name": "linux-lts",
+  "channel": "lts",
+  "version": null,
+  "release": null,
+  "kernel": null,
+  "modules": null,
+  "sha256sums": null,
+  "status": "not-published"
+}
