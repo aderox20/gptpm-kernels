@@ -27,7 +27,7 @@ def write_index(directory: Path) -> None:
                 f'<p><a href="{escape(path.name)}/">{escape(path.name)}/</a> '
                 f'<a href="{escape(archive.name)}" download>Download Folder</a></p>'
             )
-        elif path.name != 'README.md':
+        else:
             entries.append(
                 f'<p><a href="{escape(path.name)}">{escape(path.name)}</a> '
                 f'<button data-file="{escape(path.name)}">Download File</button></p>'
