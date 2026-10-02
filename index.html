@@ -3,44 +3,36 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>GPTPM Kernels</title>
+  <title>GPTPM kernels</title>
   <style>
-    :root { color-scheme: dark; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
-    body { max-width: 760px; margin: 3rem auto; padding: 0 1.25rem; background: #101218; color: #e8eaf0; }
-    h1 { color: #8be9fd; font-size: 1.5rem; }
-    .tree { border: 1px solid #303642; border-radius: 10px; padding: 1.25rem 1.5rem; background: #171a22; line-height: 1.9; }
-    .branch { margin-left: 1.5rem; }
-    .node { white-space: nowrap; }
-    .label { color: #f1fa8c; }
-    .build { color: #bdc4d6; }
-    a { color: #8be9fd; }
-    .meta { color: #8f98aa; font-size: .85rem; margin-top: 1.5rem; }
+    body { max-width: 700px; margin: 40px auto; padding: 0 16px; color: #222; background: #fff; font: 15px/1.6 monospace; }
+    h1 { font-size: 20px; font-weight: normal; }
+    pre { border-left: 2px solid #ddd; padding-left: 16px; }
+    a { color: #06c; }
   </style>
 </head>
 <body>
-  <h1>GPTPM Kernels</h1>
-  <div class="tree" aria-label="Kernel tree">
-    <div class="node">gptpm-kernels/</div>
-    <div class="branch">
-      <div class="node">├── <span class="label">linux/</span></div>
-      <div class="branch" id="linux"><div class="node">└── <span class="build">(kernel build)</span></div></div>
-      <div class="node">└── <span class="label">linux-lts/</span></div>
-      <div class="branch" id="linux-lts"><div class="node">└── <span class="build">(kernel build)</span></div></div>
-    </div>
-  </div>
-  <p class="meta">Release metadata: <a href="latest/linux.json">linux.json</a> · <a href="latest/linux-lts.json">linux-lts.json</a></p>
+  <h1>GPTPM kernels</h1>
+  <pre id="tree">gptpm-kernels/
+├── linux/
+│   └── not published yet :(
+└── linux-lts/
+    └── not published yet :(</pre>
+  <p><a href="latest/linux.json">linux metadata</a> · <a href="latest/linux-lts.json">linux-lts metadata</a></p>
   <script>
-    async function update(channel) {
-      const target = document.getElementById(channel);
+    async function show(channel, prefix) {
       try {
         const data = await fetch(`latest/${channel}.json`).then(r => r.json());
         if (!data.version || data.status === 'not-published') return;
-        const link = data.release || data.kernel;
-        target.innerHTML = `<div class="node">└── <span class="build">${data.version}</span>${link ? ` <a href="${link}">[download]</a>` : ''}</div>`;
-      } catch (_) { /* Keep the placeholder tree visible when metadata is unavailable. */ }
+        const lines = document.getElementById('tree').textContent.split('\n');
+        const index = lines.findIndex(line => line.includes(`${prefix}/`));
+        if (index < 0 || index + 1 >= lines.length) return;
+        lines[index + 1] = lines[index + 1].replace('not published yet :(', data.version);
+        document.getElementById('tree').textContent = lines.join('\n');
+      } catch (_) {}
     }
-    update('linux');
-    update('linux-lts');
+    show('linux', 'linux');
+    show('linux-lts', 'linux-lts');
   </script>
 </body>
 </html>
