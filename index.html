@@ -1,11 +1,46 @@
 <!doctype html>
 <html lang="en">
-<meta charset="utf-8">
-<title>GPTPM Kernels</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<h1>GPTPM Kernels</h1>
-<p>Kernel release metadata for GPTOS.</p>
-<ul>
-  <li><a href="latest/linux.json">linux.json</a></li>
-  <li><a href="latest/linux-lts.json">linux-lts.json</a></li>
-</ul>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>GPTPM Kernels</title>
+  <style>
+    :root { color-scheme: dark; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+    body { max-width: 760px; margin: 3rem auto; padding: 0 1.25rem; background: #101218; color: #e8eaf0; }
+    h1 { color: #8be9fd; font-size: 1.5rem; }
+    .tree { border: 1px solid #303642; border-radius: 10px; padding: 1.25rem 1.5rem; background: #171a22; line-height: 1.9; }
+    .branch { margin-left: 1.5rem; }
+    .node { white-space: nowrap; }
+    .label { color: #f1fa8c; }
+    .build { color: #bdc4d6; }
+    a { color: #8be9fd; }
+    .meta { color: #8f98aa; font-size: .85rem; margin-top: 1.5rem; }
+  </style>
+</head>
+<body>
+  <h1>GPTPM Kernels</h1>
+  <div class="tree" aria-label="Kernel tree">
+    <div class="node">gptpm-kernels/</div>
+    <div class="branch">
+      <div class="node">├── <span class="label">linux/</span></div>
+      <div class="branch" id="linux"><div class="node">└── <span class="build">(kernel build)</span></div></div>
+      <div class="node">└── <span class="label">linux-lts/</span></div>
+      <div class="branch" id="linux-lts"><div class="node">└── <span class="build">(kernel build)</span></div></div>
+    </div>
+  </div>
+  <p class="meta">Release metadata: <a href="latest/linux.json">linux.json</a> · <a href="latest/linux-lts.json">linux-lts.json</a></p>
+  <script>
+    async function update(channel) {
+      const target = document.getElementById(channel);
+      try {
+        const data = await fetch(`latest/${channel}.json`).then(r => r.json());
+        if (!data.version || data.status === 'not-published') return;
+        const link = data.release || data.kernel;
+        target.innerHTML = `<div class="node">└── <span class="build">${data.version}</span>${link ? ` <a href="${link}">[download]</a>` : ''}</div>`;
+      } catch (_) { /* Keep the placeholder tree visible when metadata is unavailable. */ }
+    }
+    update('linux');
+    update('linux-lts');
+  </script>
+</body>
+</html>
